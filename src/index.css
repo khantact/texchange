@@ -1,13 +1,40 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif&display=swap');
+*{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'PT Serif', serif;
+  color: #202A44; 
+}
+body{
+  background-color: #EAE7DC;
+  font-weight: lighter;
+}
+.header{
+  margin-top: 33vh;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50vw;
+  text-align: center;
+  -webkit-animation: fadeIn linear 2.5s;
+  user-select: none;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity: 1;}
+}
+#hiw{
+  -webkit-animation: fadeIn linear 4.5s;
+}
+
+.navbar{
+  color: white;
+  background-color: maroon;
+}
+/* Login */
+.loginHeader{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10vh;
+  width: 33vw;
+  text-align: center;
 }
