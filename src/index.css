@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif&display=swap');
+/* Color Palette
+Pink - #E98074
+Beige - #EAE7DC
+Navy - #202A44
+Darker beige - #D8C3A5
+*/
 *{
   margin: 0;
   font-family: 'PT Serif', serif;
@@ -26,15 +32,40 @@ body{
   -webkit-animation: fadeIn linear 4.5s;
 }
 
-.navbar{
-  color: white;
-  background-color: maroon;
-}
 /* Login */
-.loginHeader{
+
+.loginBody{
   margin-left: auto;
   margin-right: auto;
   margin-top: 10vh;
+  padding: 1vh;
   width: 33vw;
   text-align: center;
+  background-color: #D8C3A5;
+}
+.user{
+  padding-top: 5vh;
+  width: auto;
+  text-align: left;
+  transform: translate(34%);
+}
+.pwd{
+  padding-top: 1vh;
+  width: auto;
+  text-align: left;
+  transform: translate(34%);
+}
+#username{
+  border-radius: 6px;
+  height: 1.3rem;
+  outline: none;
+}
+#password{
+  border-radius: 6px;
+  height: 1.3rem;
+  outline: none;
+}
+#signIn{
+  padding: 1vh;
+  
 }

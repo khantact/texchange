@@ -8,16 +8,18 @@ import Login from "./pages/Login"
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path='/' exact element = {<Home/>}/>
-        <Route path='/Listings' exact element = {<Listings/>}/>
-        <Route path='/Post' exact element = {<Post/>}/>
-        <Route path='/Contact' exact element = {<Contact/>}/>
-        <Route path='/Login' exact element = {<Login/>}/>
-      </Routes>
-    </Router>
+    <div className="container">
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path='/' exact element = {<Home/>}/>
+          <Route path='/Listings' exact element = {<Listings/>}/>
+          <Route path='/Post' exact element = {<Post/>}/>
+          <Route path='/Contact' exact element = {<Contact/>}/>
+          <Route path='/Login' exact element = {<Login/>}/>
+        </Routes>
+      </Router>
+  </div>
   );
 }
 
