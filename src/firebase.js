@@ -2,6 +2,11 @@
 import firebase from "firebase/compat/app"
 import "firebase/compat/app";
 import "firebase/compat/auth";
+
+import { useEffect, useState } from "react";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
+
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -18,9 +23,15 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+// const app = firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig)
+const auth = firebase.auth(app);
+
 
 export function signUp(email, password){
-    return auth.createUserWithEmailAndPassword(auth, email, password);
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
+}
+
+export function signIn(email, password){
+    
 }
