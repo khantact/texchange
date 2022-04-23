@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTimes, faInfoCircle, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import { signUp } from "../firebase";
 
 const USER_REGEX = /^[a-zA-z][a-zA-Z0-9-_]{3,23}$/;
@@ -29,9 +29,14 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(false);
   const [mailFocus, setMailFocus] = useState(false);
-  
+  const [usedEmail, setUsedEmail] = useState(false);
+
+  const [accStatus, setAccStatus] = useState(false);
+
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -57,7 +62,6 @@ const Register = () => {
     const result = EMAIL_REGEX.test(email);
     console.log(result)
     console.log(email)
-    console.log(typeof email)
     setValidEmail(result)
   }, [email])
 
@@ -67,6 +71,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
       e.preventDefault();
+      setLoading(true);
       const v1 = USER_REGEX.test(user);
       const v2 = PWD_REGEX.test(pwd);
       const v3 = EMAIL_REGEX.test(email);
@@ -74,14 +79,39 @@ const Register = () => {
           setErrMsg("Invalid Entry");
           return;
       }
-      await signUp(email,pwd);
-      
+      try {
+        await signUp(email,pwd);
+      } catch (e) {
+        alert(e);
+        setUsedEmail(true);
+      }
+      setAccStatus(true);
+      setUsedEmail(false);
+      setLoading(false);
+      setSuccess(true);
   }
 
   return (
+    <>
+    {success ? (
+      <div className="registerBody">
+        <h1>Success!</h1>
+        <p>
+          Check Email for verification {<br/>}
+          Return to {<Link to="/Login">Log In</Link>}
+        </p>
+      </div>
+    ) : (
     <div className="registerBody">
       <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live = "assertive">{errMsg}</p>
       <h1>Register</h1>
+      <span className={usedEmail ? "errmsg" : "offscreen"}>
+        <FontAwesomeIcon icon={faTriangleExclamation}/>  Email has already been used, try again with a different email.
+      </span>
+      <span className={accStatus && !usedEmail ? "successmsg" : "offscreen"}>
+        Sign up complete! Check Email for verification. 
+        Return to {<Link to="/Login">Log In</Link>}
+      </span>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">
           Username
@@ -120,7 +150,7 @@ const Register = () => {
             <FontAwesomeIcon icon={faCheck}/>
           </span>
 
-          <span className = {!validEmail ? "valid" : "hide"}>
+          <span className = {!validEmail || !email ? "valid" : "hide"}>
             <FontAwesomeIcon icon={faTimes}/>
           </span>
 
@@ -164,6 +194,11 @@ const Register = () => {
           onFocus = {() => setPwdFocus(true)}
           onBlur = {() => setPwdFocus(false)}
         /> 
+        <p id="pwdnote" className={pwdFocus && pwd && !validPwd ? "instructions" : "offscreen"}>
+          <FontAwesomeIcon icon={faInfoCircle}/>
+          Password must contain an uppercase<br/>
+          8-24 characters, and a special character: ! @ # $ %
+        </p>
         <br/>
         <label htmlFor="confirm_pwd">
             Confirm Password:
@@ -186,7 +221,7 @@ const Register = () => {
             Passwords must match
           </p>
         <br/>
-        <button disabled = {!validName || !validPwd || !validMatch ? true : false} onClick={handleSubmit}>
+        <button disabled = {!validName || !validPwd || !validMatch || loading ? true : false} onClick={handleSubmit} id="signUp">
             Sign Up
         </button>
       </form>
@@ -195,6 +230,8 @@ const Register = () => {
           <Link to="/Login">Log In</Link>
       </p>
     </div>
+    )}
+    </>
   )
 }
 
