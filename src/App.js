@@ -5,6 +5,7 @@ import Listings from "./pages/Listings"
 import Post from "./pages/Post"
 import Contact from "./pages/Contact"
 import Login from "./pages/Login"
+import Register from "./pages/Register"
 
 function App() {
   return (
@@ -17,8 +18,10 @@ function App() {
           <Route path='/Post' exact element = {<Post/>}/>
           <Route path='/Contact' exact element = {<Contact/>}/>
           <Route path='/Login' exact element = {<Login/>}/>
+          <Route path='/Register' exact element = {<Register/>}/>
         </Routes>
       </Router>
+      
   </div>
   );
 }
