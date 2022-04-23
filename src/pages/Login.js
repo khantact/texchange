@@ -23,7 +23,6 @@ const Login = () => {
 
     setUser('');
     setPwd('');
-    setSuccess(true)
   }
 
   return (

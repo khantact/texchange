@@ -2,12 +2,15 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import { signUp } from "../firebase";
 
 const USER_REGEX = /^[a-zA-z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const EMAIL_REGEX = /\w+@\w+\.edu/;
 
 const Register = () => {
   const userRef = useRef();
+  const emailRef = useRef();
   const errRef = useRef();
 
   const [user, setUser] = useState('');
@@ -23,8 +26,9 @@ const Register = () => {
   const [matchFocus, setMatchFocus] = useState(false);
 
   // To-DO
-//   const [email, setEmail] = useState('');
-//   const [validEmail, setValidEmail] = useState(false);
+  const [email, setEmail] = useState('');
+  const [validEmail, setValidEmail] = useState(false);
+  const [mailFocus, setMailFocus] = useState(false);
   
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
@@ -35,33 +39,43 @@ const Register = () => {
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-    console.log(result);
-    console.log(user);
+    // console.log(result);
+    // console.log(user);
     setValidName(result);
   }, [user])
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
-    console.log(result)
-    console.log(pwd)
+    // console.log(result)
+    // console.log(pwd)
     setValidPwd(result)
     const match = pwd == matchPwd;
     setValidMatch(match);
   }, [pwd,matchPwd])
 
+  useEffect(() =>{
+    const result = EMAIL_REGEX.test(email);
+    console.log(result)
+    console.log(email)
+    console.log(typeof email)
+    setValidEmail(result)
+  }, [email])
+
   useEffect(() => {
     setErrMsg('');
-  }, [user,pwd,matchPwd])
+  }, [user,email,pwd,matchPwd])
 
   const handleSubmit = async (e) => {
       e.preventDefault();
       const v1 = USER_REGEX.test(user);
       const v2 = PWD_REGEX.test(pwd);
-      if (!v1 || !v2){
+      const v3 = EMAIL_REGEX.test(email);
+      if (!v1 || !v2 || !v3){
           setErrMsg("Invalid Entry");
           return;
       }
-
+      await signUp(email,pwd);
+      
   }
 
   return (
@@ -98,8 +112,37 @@ const Register = () => {
             Letters, numbers, underscores, hyphens allowed.
           </p>
 
-        <br/>
 
+        <br/>
+        <label htmlFor="email">
+          Email
+          <span className = {validEmail ? "valid" : "hide"}>
+            <FontAwesomeIcon icon={faCheck}/>
+          </span>
+
+          <span className = {!validEmail ? "valid" : "hide"}>
+            <FontAwesomeIcon icon={faTimes}/>
+          </span>
+
+        </label>
+        <br/>
+        <input 
+          type="text" 
+          id="email"
+          ref={emailRef}
+          autoComplete = "off"
+          onChange = {(e) => setEmail(e.target.value)}
+          required
+          aria-invalid = {validEmail ? "false" : "true"}
+          aria-describedby = "emailnote"
+          onFocus = {() => setMailFocus(true)}
+          onBlur = {() => setMailFocus(false)}
+        />
+        <p id="emailnote" className={mailFocus && email && !validEmail ? "instructions" : "offscreen"}>
+            <FontAwesomeIcon icon={faInfoCircle} />
+            Email must end in .edu
+        </p>
+        <br/>
           <label htmlFor="password">
           Password
           <span className = {validPwd ? "valid" : "hide"}>
@@ -143,7 +186,7 @@ const Register = () => {
             Passwords must match
           </p>
         <br/>
-        <button disabled = {!validName || !validPwd || !validMatch ? true : false}>
+        <button disabled = {!validName || !validPwd || !validMatch ? true : false} onClick={handleSubmit}>
             Sign Up
         </button>
       </form>

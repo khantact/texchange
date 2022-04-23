@@ -6,6 +6,7 @@ import Post from "./pages/Post"
 import Contact from "./pages/Contact"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
+import { signUp } from "./firebase"
 
 function App() {
   return (
