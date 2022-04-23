@@ -1,28 +1,35 @@
 import React from 'react'
 import { useRef, useState, useEffect } from 'react'
-import { Link, Route, Router } from 'react-router-dom';
+import { Link, Route, Router } from 'react-router-dom'
+import { signIn } from '../firebase'
+
 const Login = () => {
-  const userRef = useRef();
+  const emailRef = useRef();
   const errRef = useRef();
 
-  const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
 
   useEffect(() =>{
-    userRef.current.focus();
+    emailRef.current.focus();
   }, [])
 
   useEffect(() => {
     setErrMsg('');
-  }, [user,pwd])
+  }, [email,pwd])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    setUser('');
+    try {
+      await signIn(email, pwd);
+    } catch (e) {
+      alert(e)
+    }
+    setEmail('');
     setPwd('');
+    setSuccess(true);
   }
 
   return (
@@ -31,16 +38,16 @@ const Login = () => {
         <p ref = {errRef} className= {errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
         <h1 className='loginHeader'>Login</h1>
         <form onSubmit={handleSubmit}>
-          <div className="user">
-            <label htmlFor="username" id='userLabel'>Username</label>
+          <div className="email">
+            <label htmlFor="email" id='userLabel'>Email</label>
             <br/>
             <input 
               type="text" 
-              id="username" 
-              ref = {userRef} 
+              id="email" 
+              ref = {emailRef} 
               autoComplete = "off" 
-              onChange = {((e)=> setUser(e.target.value))} 
-              value={user}
+              onChange = {((e)=> setEmail(e.target.value))} 
+              value={email}
               required
               />
           </div>

@@ -50,12 +50,12 @@ body{
   }
 }
 @media screen and (max-width: 768px) {
-  .user{
+  .email{
     width: 100vw;
     text-align: center;
   }
 }
-.user{
+.email{
   padding-top: 5vh;
 }
 .pwd{
@@ -63,12 +63,17 @@ body{
 }
 #username{
   border-radius: 6px;
-  height: 2.5vh;
+  height: 2vh;
+  outline: none;
+}
+#email{
+  border-radius: 6px;
+  height: 2vh;
   outline: none;
 }
 #password{
   border-radius: 6px;
-  height: 2.5vh;
+  height: 2vh;
   outline: none;
 }
 #signIn{
@@ -108,7 +113,7 @@ body{
 
 #confirm_pwd{
   border-radius: 6px;
-  height: 2.5vh;
+  height: 2vh;
   outline: none;
 }
 
