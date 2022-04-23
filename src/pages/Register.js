@@ -38,9 +38,9 @@ const Register = () => {
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    userRef.current.focus();
-  }, [])
+  // useEffect(() => {
+  //   emailRef.current.focus();
+  // }, [])
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
@@ -54,7 +54,7 @@ const Register = () => {
     // console.log(result)
     // console.log(pwd)
     setValidPwd(result)
-    const match = pwd == matchPwd;
+    const match = pwd === matchPwd;
     setValidMatch(match);
   }, [pwd,matchPwd])
 
@@ -69,6 +69,7 @@ const Register = () => {
     setErrMsg('');
   }, [user,email,pwd,matchPwd])
 
+  
   const handleSubmit = async (e) => {
       e.preventDefault();
       setLoading(true);
@@ -85,6 +86,7 @@ const Register = () => {
         alert(e);
         setUsedEmail(true);
       }
+     
       setAccStatus(true);
       setUsedEmail(false);
       setLoading(false);

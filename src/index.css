@@ -78,7 +78,10 @@ body{
 }
 #signIn{
   background-color:#EAE7DC;
-  padding: 1.5vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
   border: none;
   cursor: pointer;
 }
@@ -190,7 +193,10 @@ button {
 }
 #signUp {
   background-color: #EAE7DC;
-  padding: 1.5vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
   border: none;
   cursor: pointer;
 }

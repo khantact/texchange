@@ -29,10 +29,19 @@ const Login = () => {
     }
     setEmail('');
     setPwd('');
-    setSuccess(true);
+    
   }
 
   return (
+    <>
+    {success ? (
+      <div className="loginBody">
+        <h1>Success!</h1>
+        <p>
+          You are now logged in! {<br/>}
+        </p>
+      </div>
+    ) : (
     <div>
       <div className="loginBody">
         <p ref = {errRef} className= {errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
@@ -72,8 +81,8 @@ const Login = () => {
           </span>
         </p>
       </div>
-
     </div>
+    )} </>
   )
 }
 

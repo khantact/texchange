@@ -2,7 +2,7 @@
 import firebase from "firebase/compat/app"
 import "firebase/compat/app";
 import "firebase/compat/auth";
-
+import "firebase/compat/database"
 import { useEffect, useState } from "react";
 import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
@@ -15,6 +15,7 @@ import { unstable_renderSubtreeIntoContainer } from "react-dom";
 const firebaseConfig = {
   apiKey: "AIzaSyBczvJgiqCWDyERGXEnoBdlxofPtxvFGXY",
   authDomain: "texchange-70636.firebaseapp.com",
+  databaseURL:"https://texchange-70636-default-rtdb.firebaseio.com/",
   projectId: "texchange-70636",
   storageBucket: "texchange-70636.appspot.com",
   messagingSenderId: "191772748536",
@@ -27,11 +28,27 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig)
 const auth = firebase.auth(app);
 
+var signedIn = false;
 
 export function signUp(email, password){
-    return firebase.auth().createUserWithEmailAndPassword(email, password)
+  const db = firebase.database();
+  firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user){
+  })
+  
+  firebase.auth().onAuthStateChanged( user =>{
+    if (user)
+      signedIn = true;
+      db.ref.child(`users/${user.uid}`).set({user: user, email : user.email})
+  })
+  
 }
 
 export function signIn(email, password){
-    
+  return firebase.auth().signInWithEmailAndPassword(email,password)
+}
+
+export function signOut(){
+  firebase.auth().signOut().then(()=>{
+    signedIn = false;
+  })
 }
