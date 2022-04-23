@@ -57,13 +57,12 @@ const Login = () => {
               required
               />
          </div>
-         <br/>
-         <button type="submit" id='signIn'>Sign in</button>
+         <button type="submit" id='signIn'>Sign In</button>
         </form>
         <p className='needAcc'>
           Need an Account? <br/>
           <span className="line">
-            <a href="/Register" id="signUpLink">Sign Up</a>
+            <Link to="/Register" id='signUpLink'>Sign Up</Link>
           </span>
         </p>
       </div>
