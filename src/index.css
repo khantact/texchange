@@ -43,29 +43,48 @@ body{
   text-align: center;
   background-color: #D8C3A5;
 }
+@media screen and (max-width: 768px) {
+  .loginBody{
+    width: 100vw;
+    text-align: center;
+  }
+}
+@media screen and (max-width: 768px) {
+  .user{
+    width: 100vw;
+    text-align: center;
+  }
+}
 .user{
   padding-top: 5vh;
-  width: auto;
-  text-align: left;
-  transform: translate(34%);
 }
 .pwd{
   padding-top: 1vh;
-  width: auto;
-  text-align: left;
-  transform: translate(34%);
 }
 #username{
   border-radius: 6px;
-  height: 1.3rem;
+  height: 2.5vh;
   outline: none;
 }
 #password{
   border-radius: 6px;
-  height: 1.3rem;
+  height: 2.5vh;
   outline: none;
 }
 #signIn{
   padding: 1vh;
+
+}
+#userLabel{
+  padding-bottom: 0vh;
+}
+.needAcc{
+  padding-top: 1vh;
+  width: 33vw;
+  text-align: left;
+}
+#signUpLink:hover{
+  color: #E98074;
+  transition: all 0.2s ease-in-out;
   
 }

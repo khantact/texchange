@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRef, useState, useEffect } from 'react'
-
+import { Link, Route, Router } from 'react-router-dom';
 const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
@@ -18,14 +18,22 @@ const Login = () => {
     setErrMsg('');
   }, [user,pwd])
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setUser('');
+    setPwd('');
+    setSuccess(true)
+  }
+
   return (
     <div>
       <div className="loginBody">
         <p ref = {errRef} className= {errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
         <h1 className='loginHeader'>Login</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="user">
-            <label htmlFor="username" >Username</label>
+            <label htmlFor="username" id='userLabel'>Username</label>
             <br/>
             <input 
               type="text" 
@@ -52,8 +60,17 @@ const Login = () => {
          <br/>
          <button type="submit" id='signIn'>Sign in</button>
         </form>
-          
+        <p className='needAcc'>
+          Need an Account? <br/>
+          <span className="line">
+            <Router>
+
+            </Router>
+            <Link to="/Register" id='signUpLink'>Sign up</Link>
+          </span>
+        </p>
       </div>
+
     </div>
   )
 }
