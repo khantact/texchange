@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRef, useState, useEffect } from 'react'
-import { Link, Route, Router } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { signIn } from '../firebase'
 
 const Login = () => {
@@ -11,20 +11,16 @@ const Login = () => {
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
+  const Navigate = useNavigate();
 
-  useEffect(() =>{
-    emailRef.current.focus();
-  }, [])
-
-  useEffect(() => {
-    setErrMsg('');
-  }, [email,pwd])
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await signIn(email, pwd)
       setSuccess(true);
+      localStorage.setItem('user', email)
+      console.log(email)
     } catch (e) {
       alert(e)
     }
@@ -40,6 +36,7 @@ const Login = () => {
         <h1>Success!</h1>
         <p>
           You are now logged in! {<br/>}
+          {Navigate('/')}
         </p>
       </div>
     ) : (
