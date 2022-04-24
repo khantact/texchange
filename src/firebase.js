@@ -58,11 +58,8 @@ export function signIn(email, password){
 
 }
 
-export function signOut(){
-  firebase.auth().onAuthStateChanged( user =>{
-    if (!user){
-      loggedIn = false;
-    }
-  })
-  return firebase.auth().signOut()
+export async function signOut(){
+  await firebase.auth().signOut();
+  localStorage.removeItem('user')
+  loggedIn = false;
 }
