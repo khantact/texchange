@@ -27,28 +27,42 @@ const firebaseConfig = {
 // const app = firebase.initializeApp(firebaseConfig);
 const app = firebase.initializeApp(firebaseConfig)
 const auth = firebase.auth(app);
+const db = firebase.database();
+export var loggedIn;
 
-var signedIn = false;
-
-export function signUp(email, password){
-  const db = firebase.database();
-  firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user){
-  })
+export function signUp(email, password,username){
+  firebase.auth().createUserWithEmailAndPassword(email, password)
   
   firebase.auth().onAuthStateChanged( user =>{
-    if (user)
-      signedIn = true;
-      db.ref.child(`users/${user.uid}`).set({user: user, email : user.email})
+    if (user){
+      writeData(email, username, user.uid)
+    }
   })
   
+}
+
+export function getUserId(){
+  return firebase.auth().currentUser.uid;
+}
+
+export function writeData(email, username, userId){
+  db.ref('users').child(userId).set({
+        user: username, 
+        email : email
+  });
 }
 
 export function signIn(email, password){
+  loggedIn = true;
   return firebase.auth().signInWithEmailAndPassword(email,password)
+
 }
 
 export function signOut(){
-  firebase.auth().signOut().then(()=>{
-    signedIn = false;
+  firebase.auth().onAuthStateChanged( user =>{
+    if (!user){
+      loggedIn = false;
+    }
   })
+  return firebase.auth().signOut()
 }

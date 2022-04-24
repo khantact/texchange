@@ -23,7 +23,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signIn(email, pwd);
+      await signIn(email, pwd)
+      setSuccess(true);
     } catch (e) {
       alert(e)
     }

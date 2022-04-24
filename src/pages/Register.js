@@ -2,7 +2,8 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, Route } from "react-router-dom";
-import { signUp } from "../firebase";
+import { signUp, writeData, getUserId } from "../firebase";
+
 
 const USER_REGEX = /^[a-zA-z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -60,8 +61,6 @@ const Register = () => {
 
   useEffect(() =>{
     const result = EMAIL_REGEX.test(email);
-    console.log(result)
-    console.log(email)
     setValidEmail(result)
   }, [email])
 
@@ -69,6 +68,9 @@ const Register = () => {
     setErrMsg('');
   }, [user,email,pwd,matchPwd])
 
+  // useEffect(() =>{
+  //   writeData(email,user, getUserId())
+  // }, [success])
   
   const handleSubmit = async (e) => {
       e.preventDefault();
@@ -81,16 +83,16 @@ const Register = () => {
           return;
       }
       try {
-        await signUp(email,pwd);
+        await signUp(email,pwd,user);
+        setAccStatus(true);
+        setUsedEmail(false);
+        setLoading(false);
+        setSuccess(true);
       } catch (e) {
-        alert(e);
         setUsedEmail(true);
       }
      
-      setAccStatus(true);
-      setUsedEmail(false);
-      setLoading(false);
-      setSuccess(true);
+      
   }
 
   return (

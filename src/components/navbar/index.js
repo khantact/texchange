@@ -6,17 +6,19 @@ import {
   NavBtn,
   NavBtnLink,
 } from './Navbar';
-  
+
+import { signOut } from '../../firebase';
+
 const Navbar = () => {
   return (
-    <>
+    <>  
+
       <Nav>
             <NavLink to='/'>
                 <h1>logo</h1>
             </NavLink>
         <Bars />
         <NavMenu>
-            
             <NavLink to= '/Listings' activeStyle>
                 Listings
             </NavLink>
@@ -26,8 +28,8 @@ const Navbar = () => {
             <NavLink to= '/contact' activeStyle>
                 Contact
             </NavLink>
-            <NavBtnLink to='/Login' activeStyle>
-                Log In / Register
+            <NavBtnLink to='/' activeStyle onClick={signOut}>
+                Log Out
             </NavBtnLink>
         </NavMenu>
         
@@ -35,5 +37,6 @@ const Navbar = () => {
     </>
   );
 };
-  
+
+
 export default Navbar;
