@@ -1,8 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, Route } from "react-router-dom";
-import { signUp, writeData, getUserId } from "../firebase";
+import { Link } from "react-router-dom";
+import { auth, fdb } from "../firebase";
+import { setDoc, doc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 
 
 const USER_REGEX = /^[a-zA-z][a-zA-Z0-9-_]{3,23}$/;
@@ -26,7 +29,7 @@ const Register = () => {
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
-  // To-DO
+
   const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(false);
   const [mailFocus, setMailFocus] = useState(false);
@@ -39,21 +42,14 @@ const Register = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   emailRef.current.focus();
-  // }, [])
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-    // console.log(result);
-    // console.log(user);
     setValidName(result);
   }, [user])
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
-    // console.log(result)
-    // console.log(pwd)
     setValidPwd(result)
     const match = pwd === matchPwd;
     setValidMatch(match);
@@ -68,9 +64,6 @@ const Register = () => {
     setErrMsg('');
   }, [user,email,pwd,matchPwd])
 
-  // useEffect(() =>{
-  //   writeData(email,user, getUserId())
-  // }, [success])
   
   const handleSubmit = async (e) => {
       e.preventDefault();
@@ -83,11 +76,22 @@ const Register = () => {
           return;
       }
       try {
-        await signUp(email,pwd,user);
+        const userinfo = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          pwd
+        );
+        await setDoc(doc(fdb, 'users', userinfo.user.uid),{
+          uid: userinfo.user.uid,
+          user,
+          email,
+          isOnline: true,
+        })
         setAccStatus(true);
         setUsedEmail(false);
         setLoading(false);
         setSuccess(true);
+        
       } catch (e) {
         setUsedEmail(true);
       }

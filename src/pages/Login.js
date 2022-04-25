@@ -1,7 +1,9 @@
 import React from 'react'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { signIn } from '../firebase'
+import { auth, fdb } from '../firebase'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { updateDoc, doc } from 'firebase/firestore'
 
 const Login = () => {
   const emailRef = useRef();
@@ -17,15 +19,15 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signIn(email, pwd)
+      const userinfo = await signInWithEmailAndPassword(auth,email,pwd);
       setSuccess(true);
-      localStorage.setItem('user', email)
-      console.log(email)
+      await updateDoc(doc(fdb, 'users', userinfo.user.uid),{
+        isOnline: true,
+      })
     } catch (e) {
       alert(e)
     }
-    setEmail('');
-    setPwd('');
+
     
   }
 
@@ -36,7 +38,7 @@ const Login = () => {
         <h1>Success!</h1>
         <p>
           You are now logged in! {<br/>}
-          {Navigate('/')}
+          {/* {Navigate('/')} */}
         </p>
       </div>
     ) : (
@@ -70,7 +72,7 @@ const Login = () => {
               required
               />
          </div>
-         <button type="submit" id='signIn'>Sign In</button>
+         <button id='signIn'>Sign In</button>
         </form>
         <p className='needAcc'>
           Need an Account? <br/>

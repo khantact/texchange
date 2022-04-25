@@ -1,11 +1,8 @@
 // Import the functions you need from the SDKs you need
 import firebase from "firebase/compat/app"
-import "firebase/compat/app";
-import "firebase/compat/auth";
 import "firebase/compat/database"
-import { useEffect, useState } from "react";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
-
+import { getFirestore } from 'firebase/firestore';
+import { getAuth } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,40 +23,11 @@ const firebaseConfig = {
 // Initialize Firebase
 // const app = firebase.initializeApp(firebaseConfig);
 const app = firebase.initializeApp(firebaseConfig)
-const auth = firebase.auth(app);
-const db = firebase.database();
+const auth = getAuth(app);
+const fdb = getFirestore(app);
 export var loggedIn;
 
-export function signUp(email, password,username){
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-  
-  firebase.auth().onAuthStateChanged( user =>{
-    if (user){
-      writeData(email, username, user.uid)
-    }
-  })
-  
-}
-
-export function getUserId(){
-  return firebase.auth().currentUser.uid;
-}
-
-export function writeData(email, username, userId){
-  db.ref('users').child(userId).set({
-        user: username, 
-        email : email
-  });
-}
-
-export function signIn(email, password){
-  loggedIn = true;
-  return firebase.auth().signInWithEmailAndPassword(email,password)
-
-}
-
-export async function signOut(){
-  await firebase.auth().signOut();
-  localStorage.removeItem('user')
-  loggedIn = false;
+export {
+  auth,
+  fdb
 }

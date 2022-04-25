@@ -3,66 +3,67 @@ import {
   NavLink,
   Bars,
   NavMenu,
-  NavBtn,
   NavBtnLink,
 } from './Navbar';
+import { auth, fdb } from '../../firebase';
+import { signOut } from 'firebase/auth';
+import { updateDoc, doc } from 'firebase/firestore';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/auth';
 import { useNavigate } from 'react-router-dom';
-import { signOut } from '../../firebase';
 
 const Navbar = () => { 
-  const isAuthenticated = () =>{
-    return localStorage.getItem('user') ? true : false;
-  }
-  const loginStatus = isAuthenticated();
+  const Navigate = useNavigate();
+  const {user} = useContext(AuthContext);
   
-  function handleClick(){
-    signOut()
-  }
+  const handleSignout = async() => {
+    await updateDoc(doc(fdb,'users', auth.currentUser.uid), {
+      isOnline: false,
+    });
+    await signOut(auth);
+    Navigate('/Login')
+  };
+  return(
 
-  if (loginStatus){
-    return(
-      <>  
-        <Nav>
-              <NavLink to='/'>
-                  <h1>logo</h1>
-              </NavLink>
+    <Nav>
+      <NavLink to='/'>
+        <h1>logo</h1>
+      </NavLink>
+          {user ? (
+            <>
+          
           <Bars />
           <NavMenu>
-              <NavLink to= '/Listings' activeStyle>
-                  Listings
-              </NavLink>
-              <NavLink to= '/Post' activeStyle>
-                  Post
-              </NavLink>
-              <NavLink to= '/contact' activeStyle>
-                  Contact
-              </NavLink>
-              <NavBtnLink to='/' activeStyle onClick={handleClick()}>
-                  Log Out
+            <NavLink to= '/Listings'>
+                Listings
+            </NavLink>
+            <NavLink to= '/Post'>
+                Post
+            </NavLink>
+            <NavLink to= '/contact'>
+                Contact
+            </NavLink>
+            <NavLink to= '/profile'>
+                Profile
+            </NavLink>
+            <NavBtnLink to='/' onClick={handleSignout()}>
+                Log Out
+            </NavBtnLink>
+          </NavMenu>
+          </>
+          ) : (
+          <>  
+              <NavMenu>
+              <NavBtnLink to='/Login'>
+                  Log In / Register
               </NavBtnLink>
           </NavMenu>
+
+          </>
+          )}
           
         </Nav>
-      </>
-  )} else{
-    return(
-      <>  
-      <Nav>
-            <NavLink to='/'>
-                <h1>logo</h1>
-            </NavLink>
-        <Bars />
-        <NavMenu>
-            <NavBtnLink to='/Login' activeStyle>
-                Log In / Register
-            </NavBtnLink>
-        </NavMenu>
-        
-      </Nav>
-    </>
-    )
-  }
-
+  )
 };
 
 
