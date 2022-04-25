@@ -24,6 +24,7 @@ const Login = () => {
       await updateDoc(doc(fdb, 'users', userinfo.user.uid),{
         isOnline: true,
       })
+      Navigate('/')
     } catch (e) {
       alert(e)
     }
@@ -32,17 +33,7 @@ const Login = () => {
   }
 
   return (
-    <>
-    {success ? (
-      <div className="loginBody">
-        <h1>Success!</h1>
-        <p>
-          You are now logged in! {<br/>}
-          {/* {Navigate('/')} */}
-        </p>
-      </div>
-    ) : (
-    <div>
+    <div> 
       <div className="loginBody">
         <p ref = {errRef} className= {errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
         <h1 className='loginHeader'>Login</h1>
@@ -82,7 +73,6 @@ const Login = () => {
         </p>
       </div>
     </div>
-    )} </>
   )
 }
 
