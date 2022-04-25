@@ -46,7 +46,7 @@ const Navbar = () => {
             <NavLink to= '/profile'>
                 Profile
             </NavLink>
-            <NavBtnLink to='/' onClick={handleSignout()}>
+            <NavBtnLink to='/' onClick={handleSignout}>
                 Log Out
             </NavBtnLink>
           </NavMenu>

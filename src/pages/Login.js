@@ -20,19 +20,26 @@ const Login = () => {
     e.preventDefault();
     try {
       const userinfo = await signInWithEmailAndPassword(auth,email,pwd);
-      setSuccess(true);
       await updateDoc(doc(fdb, 'users', userinfo.user.uid),{
         isOnline: true,
       })
-      Navigate('/')
+      setSuccess(true);
     } catch (e) {
       alert(e)
     }
 
     
   }
-
+  
   return (
+    success ? (
+
+      <div className="loginBody">
+        <p>Success! Logging you in now</p>
+        {Navigate('/')}
+      </div>
+    ) : 
+    (
     <div> 
       <div className="loginBody">
         <p ref = {errRef} className= {errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
@@ -73,7 +80,7 @@ const Login = () => {
         </p>
       </div>
     </div>
-  )
+  ))
 }
 
 export default Login

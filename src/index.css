@@ -42,6 +42,8 @@ body{
   width: 33vw;
   text-align: center;
   background-color: #D8C3A5;
+  -webkit-animation: fadeIn linear 1.5s;
+  user-select: none;
 }
 @media screen and (max-width: 768px) {
   .loginBody{
@@ -87,7 +89,7 @@ body{
 }
 #signIn:hover{
   transition: all ease-in-out 0.2s ;
-  background-color: #ab977c
+  color: #E98074;
 }
 #userLabel{
   padding-bottom: 0vh;
@@ -97,10 +99,10 @@ body{
   width: 33vw;
   text-align: left;
 }
-#signUpLink:hover{
-  color: #E98074;
-  transition: all 0.2s ease-in-out;
 
+#signUpLink:hover{
+  transition: all 0.2s ease-in-out;
+  color: #E98074;
 }
 
 /* Register  */
@@ -118,6 +120,17 @@ body{
   border-radius: 6px;
   height: 2vh;
   outline: none;
+}
+
+#signUp{
+  background-color: #EAE7DC;
+}
+
+#signUp:hover{
+  background-color: #EAE7DC;
+  transition: all ease-in-out 0.2s;
+  color: red;
+  color: #E98074;
 }
 
 input[type="text"],
@@ -201,7 +214,4 @@ button {
   cursor: pointer;
 }
 
-#signUp:hover {
-  transition: all ease-in-out 0.2s;
-  background-color: #ab977c
-}
+

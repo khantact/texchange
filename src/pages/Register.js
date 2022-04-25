@@ -1,11 +1,10 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth, fdb } from "../firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-
 
 
 const USER_REGEX = /^[a-zA-z][a-zA-Z0-9-_]{3,23}$/;
@@ -16,6 +15,8 @@ const Register = () => {
   const userRef = useRef();
   const emailRef = useRef();
   const errRef = useRef();
+
+  const [school, setSchool] = useState('');
 
   const [user, setUser] = useState('');
   const [validName, setValidName] = useState(false);
@@ -41,7 +42,7 @@ const Register = () => {
   const [success, setSuccess] = useState(false);
 
   const [loading, setLoading] = useState(false);
-
+  const Navigate = useNavigate()
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
@@ -106,7 +107,7 @@ const Register = () => {
         <h1>Success!</h1>
         <p>
           Check Email for verification {<br/>}
-          Return to {<Link to="/Login">Log In</Link>}
+          {Navigate('/profile')}
         </p>
       </div>
     ) : (
@@ -235,7 +236,7 @@ const Register = () => {
       </form>
       <p id="alreadyReg">
           Already Registered?<br />
-          <Link to="/Login">Log In</Link>
+          <Link to="/Login" id="signUpLink">Log In</Link>
       </p>
     </div>
     )}
