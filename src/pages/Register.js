@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, fdb } from "../firebase";
 import { setDoc, doc } from "firebase/firestore";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 
 
 const USER_REGEX = /^[a-zA-z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const EMAIL_REGEX = /\w+@\w+\.edu/;
+const EMAIL_REGEX = /\w+@\w+\.edu$/;
 
 const Register = () => {
   const userRef = useRef();
@@ -88,6 +88,7 @@ const Register = () => {
           email,
           isOnline: true,
         })
+        await sendEmailVerification(auth.currentUser);
         setAccStatus(true);
         setUsedEmail(false);
         setLoading(false);
@@ -159,7 +160,7 @@ const Register = () => {
             <FontAwesomeIcon icon={faCheck}/>
           </span>
 
-          <span className = {!validEmail || !email ? "valid" : "hide"}>
+          <span className = {validEmail || !email ? "hide" : "invalid"}>
             <FontAwesomeIcon icon={faTimes}/>
           </span>
 
@@ -210,7 +211,7 @@ const Register = () => {
         </p>
         <br/>
         <label htmlFor="confirm_pwd">
-            Confirm Password:
+            Confirm Password
             <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
             <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
         </label>

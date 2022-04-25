@@ -21,7 +21,6 @@ const Navbar = () => {
       isOnline: false,
     });
     await signOut(auth);
-    Navigate('/Login')
   };
   return(
 
@@ -46,7 +45,7 @@ const Navbar = () => {
             <NavLink to= '/profile'>
                 Profile
             </NavLink>
-            <NavBtnLink to='/' onClick={handleSignout}>
+            <NavBtnLink to='/Login' onClick={handleSignout}>
                 Log Out
             </NavBtnLink>
           </NavMenu>

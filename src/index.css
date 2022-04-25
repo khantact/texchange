@@ -42,7 +42,7 @@ body{
   width: 33vw;
   text-align: center;
   background-color: #D8C3A5;
-  -webkit-animation: fadeIn linear 1.5s;
+  -webkit-animation: fadeIn linear 1s;
   user-select: none;
 }
 @media screen and (max-width: 768px) {
@@ -114,6 +114,7 @@ body{
   width: 33vw;
   text-align: center;
   background-color: #D8C3A5;
+  -webkit-animation: fadeIn linear 1s;
 }
 
 #confirm_pwd{
