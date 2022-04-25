@@ -215,4 +215,22 @@ button {
   cursor: pointer;
 }
 
+.profile_container{
+  
+}
+.profileHead{
+  display: flex;
+  justify-content: center;
+  padding-top: 5vh;
+}
+.profImg{
+  display: flex;
+  justify-content: center;
+  padding-top: 1vh;
+}
 
+#pfp{
+  max-height: 15vh;
+  max-width: 15vw;
+  border-radius: 7.5vw;
+}
