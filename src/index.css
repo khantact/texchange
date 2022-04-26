@@ -215,22 +215,56 @@ button {
   cursor: pointer;
 }
 
-.profile_container{
-  
-}
+/* profile */
+
 .profileHead{
   display: flex;
   justify-content: center;
   padding-top: 5vh;
 }
 .profImg{
-  display: flex;
-  justify-content: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 4%;
+  position: relative;
   padding-top: 1vh;
+}
+
+.profImg img{
+  width: 100px;
+  height: 100px;
+}
+
+.profImg:hover img{
+  opacity: 0.4;
+}
+
+.profImg:hover .overlay {
+  opacity: 1;
 }
 
 #pfp{
   max-height: 15vh;
   max-width: 15vw;
   border-radius: 7.5vw;
+  position: relative;
+
+}
+
+.overlay{
+  position: absolute;
+  transition: 0.5s ease;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  opacity: 0;
+}
+
+
+
+.uploadArrow{
+  transform: translate(-50%,-50%);
+  position: absolute;
+  cursor: pointer;
 }

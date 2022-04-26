@@ -1,19 +1,28 @@
 import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import img from '../assets/stock_image.jpg'
-const profile = () => {
+import Img from '../assets/stock_image.jpg'
+import { useState } from 'react'
+
+const Profile = () => {
+  const [img, setImg] = useState('');
   return (
     <div className='profile_container'>
       <h1 className='profileHead'>Profile</h1>
       <div className="profImg">
-        <img src={img} alt="pfp" id='pfp'/>
+        <img src={Img} alt="pfp" id='pfp'/>
         <div className="overlay">
           <div>
-            <label htmlFor="uploadImg">
-            <FontAwesomeIcon icon={faArrowUpFromBracket}/>
+            <label htmlFor="uploadImg" className='uploadArrow'>
+            <FontAwesomeIcon icon={faArrowUpFromBracket} size= {'2x'}/>
             </label>
-            <input type="file" accept='image/*' style={{display: 'none'}} id= 'uploadImg' />
+            <input 
+              type="file" 
+              accept='image/*' 
+              style={{display: 'none'}} 
+              id= 'uploadImg' 
+              onChange={(e) =>{setImg(e.target.files[0])}}  
+            />
           </div>
         </div>
       </div>
@@ -21,4 +30,4 @@ const profile = () => {
   )
 }
 
-export default profile
+export default Profile

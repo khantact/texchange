@@ -41,7 +41,7 @@ const Navbar = () => {
             <NavLink to= '/contact'>
                 Contact
             </NavLink>
-            <NavLink to= '/profile'>
+            <NavLink to= '/Profile'>
                 Profile
             </NavLink>
             <NavBtnLink to='/Login' onClick={handleSignout}>

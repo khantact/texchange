@@ -6,7 +6,7 @@ import Post from "./pages/Post"
 import Contact from "./pages/Contact"
 import Login from "./pages/Login"
 import Register from "./pages/Register";
-import Profile from "./pages/profile";
+import Profile from "./pages/Profile";
 import AuthProvider from "./context/auth";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -29,7 +29,7 @@ function App() {
             <Route path='/Contact' exact element = {<Contact/>}/>
           </Route>
           <Route exact path= '/profile' element = {<PrivateRoute/>}>
-            <Route path='/profile' exact element = {<Profile/>}/>
+            <Route path='/Profile' exact element = {<Profile/>}/>
           </Route>
           <Route path='/Login' exact element = {<Login/>}/>
           <Route path='/Register' exact element = {<Register/>}/>
